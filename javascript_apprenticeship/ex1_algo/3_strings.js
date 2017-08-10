@@ -51,4 +51,40 @@ if(anagrams(wordOne.split(""), wordTwo.split(""))){
  * Case sensitivity should be taken into account
  * */
 
- let palindrome = "Eh ! ça va la vache";
+let palindrome = "Eh ! ça va la vache";
+
+let resultReverse= [];
+let palindromeArray = palindrome.split(' ').reverse();
+
+palindromeArray.forEach((item) => {
+    resultReverse.push(item.split("").reverse().join(''));  
+ });
+ console.log(`Reverse of '${palindrome}' is '${resultReverse.join(" ")}'`);
+//Need a string for isPalindrome
+ let pladindrome_reverse = resultReverse.join(" ");
+
+ if(isPalindrome(pladindrome_reverse.split(""), palindrome.split(""))){
+     console.log(`'${palindrome}' est un palindrome !`)
+ }
+ 
+  function isPalindrome(wordOne, wordTwo){
+     if(wordOne.length !== wordOne.length)
+        return false;
+     for(let i =0; i<wordOne.length; i++){
+        if(wordOne[i] !== wordTwo[i]){
+            let currentChar = wordOne[i];
+            let searchChar =  wordTwo[i];
+            for(let j = i; j<wordOne.length; j++){
+                //if char smiliar found, swap
+                if(wordOne[j] === searchChar){
+                   wordOne[i] = wordOne[j];
+                   wordOne[j] = currentChar;
+                   break;
+                }
+            }
+        }
+     }
+    //console.log(wordOne.join(""));
+    //console.log(wordTwo.join(""));
+    return wordOne.join("") === wordTwo.join("");
+ }
