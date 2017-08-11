@@ -17,148 +17,117 @@ import momentLocale from 'moment/locale/fr';
 */
 
 class Mission{
-    constructor(data){
-        this._name = data.name;
-        this._map = data.map;
-        this._date = data.date;
-        this._workforce = data.informations.homme2main;
-        this._handling = data.informations.manutention;
-        this._volume = data.informations.volume;
-        this._nbObjects = data.informations.objects;
-        this._objectList = data.informations.object_list;
-        this._distance = data.informations.distance;
-        this._duration = data.informations.durations.mission;
-        this._roadDuration = data.informations.durations.road;
+    constructor(){}
+
+    static get name(){
+        return json.data.name;
     }
 
-    get name(){
-        return this._name;
+    static get map(){
+        return json.data.map;
     }
 
-    get map(){
-        return this._map;
+    static get date(){
+        return json.data.date;
+    }
+}
+
+class MissionDetails{
+    constructor(){}
+
+    static get workforce(){
+        return json.data.informations.homme2main;
     }
 
-    get date(){
-        return this._date;
+    static get handling(){
+        return json.data.informations.manutention;
     }
 
-    get workforce(){
-        return this._workforce;
+    static get volume(){
+        return json.data.informations.volume;
     }
 
-    get handling(){
-        return this._handling;
+    static get nbObjects(){
+        return json.data.informations.objects;
     }
 
-    get volume(){
-        return this._volume;
+    static get objectList(){
+        return json.data.informations.object_list;
     }
 
-    get nbObjects(){
-        return this._nbObjects;
+    static get distance(){
+        return json.data.informations.distance;
     }
 
-    get objectList(){
-        return this._objectList;
+    static get duration(){
+        return json.data.informations.durations.mission;
     }
 
-    get distance(){
-        return this._distance;
-    }
-
-    get duration(){
-        return this._duration;
-    }
-
-    get roadDuration(){
-        return this._roadDuration;
+    static get roadDuration(){
+        return json.data.informations.durations.road;
     }
 }
 
 class Customer {
-    constructor(data){ 
-        this._firstname = data.customer.firstname;
-        this._lastname = data.customer.lastname;
-        this._email = data.customer.email;
-        this._phonenumber = data.customer.phonenumber;
-        this._info = data.customer.info;
-        this._comments = data.informations.comments;
-        this._pictures = data.pictures;
+    constructor(){}
+
+    static get firstname(){
+        return json.data.customer.firstname;
     }
 
-    get firstname(){
-        return this._firstname;
+    static get lastname(){
+        return json.data.customer.lastname;
     }
 
-    get lastname(){
-        return this._lastname;
+    static get comments(){
+        return json.data.informations.comments;
     }
 
-    get comments(){
-        return this._comments;
-    }
-
-    get pictures(){
-        return this._pictures;
+    static get pictures(){
+        return json.data.pictures;
     }
 }
 
-class Journey {
-    constructor(data){
-        this._fullAddress = data.formatted_address;
-        this._nameAdress = data.name;
-        this._thoroughfare = data.thoroughfare;
-        this._subThoroughfare = data.subThoroughfare;
-        this._locality = data.locality;
-        this._subLocality = data.subLocality;
-        this._postalCode = data.postal_code;
-        this._coutry = data.country;
-        this._latitude = data.coordinates.latitude;
-        this._longitude = data.coordinates.longitude;
-        this._map = data.map_url;
-        this._stairs = data.stairs;
-        this._lift = data.lift;
+class Origin {
+    constructor(){}
+
+    static get locality(){
+        return json.data.places.origin.locality
     }
 
-    get locality(){
-        return this._locality;
+    static get postalCode(){
+        return json.data.places.origin.postal_code;
     }
 
-    get postalCode(){
-        return this._postalCode;
+    static get stairs(){
+        return json.data.informations.stairs.origin.stairs;
     }
 
-    get stairs(){
-        return this._stairs;
-    }
-
-    get lift(){
-        return this._lift;
+    static get lift(){
+        return json.data.informations.stairs.origin.lift;
     }
 }
 
-class Origin extends Journey {
-    constructor(data){
-        super(Object.assign(data.places.origin, data.informations.stairs.origin));
+class Destination {
+    constructor(){}
+
+    static get locality(){
+        return json.data.places.destination.locality
+    }
+
+    static get postalCode(){
+        return json.data.places.destination.postal_code;
+    }
+
+    static get stairs(){
+        return json.data.informations.stairs.destination.stairs;
+    }
+
+    static get lift(){
+        return json.data.informations.stairs.destination.lift;
     }
 }
 
-class Destination extends Journey {
-    constructor(data){
-        super(Object.assign(data.places.destination, data.informations.stairs.destination));
-    }
-}
-
-let mission = new Mission(json.data);
-let customer = new Customer(json.data);
-let origin = new Origin(json.data);
-let destination = new Destination(json.data)
-
-// console.log(mission);
-// console.log(customer);
-// console.log(origin);
-// console.log(destination);
 
 /*
 * Bonus Question : Once done, create a React component which will display this mission data
@@ -166,53 +135,50 @@ let destination = new Destination(json.data)
 */
 
 class MissionComponent extends React.Component {
-    constructor(props){
-        super(props);   
-    }
     render() {
         return (
             <div>
                 <div className='mission_info'>
 
-                    <MissionMap value={this.props.mission.map}/>
+                    <MissionMap value={Mission.map}/>
                     <MissionTitleInfo
-                        title={this.props.mission.name}
-                        date={moment(this.props.mission.date).format('dddd DD MMMM YYYY HH:mm')}
+                        title={Mission.name}
+                        date={moment(Mission.date).format('dddd DD MMMM YYYY HH:mm')}
                     />
 
                     <MissionOriginToDest
-                        originPostalCode = {this.props.origin.postalCode}
-                        originLocality = {this.props.origin.locality}
-                        destPostalCode = {this.props.destination.postalCode}
-                        destLocality = {this.props.destination.locality}
+                        originPostalCode = {Origin.postalCode}
+                        originLocality = {Origin.locality}
+                        destPostalCode = {Destination.postalCode}
+                        destLocality = {Destination.locality}
                     />
 
                     <MissionInfoAmount
-                        volume = {this.props.mission.volume}
-                        nbObjects = {this.props.mission.nbObjects}
+                        volume = {MissionDetails.volume}
+                        nbObjects = {MissionDetails.nbObjects}
                     />
 
                     <MissionInfoTime
-                        duration = {this.props.mission.duration}
-                        roadDuration = {this.props.mission.roadDuration}
-                        distance = {this.props.mission.distance}
+                        duration = {MissionDetails.duration}
+                        roadDuration = {MissionDetails.roadDuration}
+                        distance = {MissionDetails.distance}
                     />
 
                     <MissionInfoAction
-                        workforce = {this.props.mission.workforce}
-                        handling = {this.props.mission.handling}
-                        originStairs = {this.props.origin.stairs}
-                        originLift = {this.props.origin.lift}
-                        destStairs = {this.props.destination.stairs}
-                        destLift = {this.props.destination.lift}
+                        workforce = {MissionDetails.workforce}
+                        handling = {MissionDetails.handling}
+                        originStairs = {Origin.stairs}
+                        originLift = {Origin.lift}
+                        destStairs = {Destination.stairs}
+                        destLift = {Destination.lift}
                     />
 
                     <MissionComment
-                        firstname = {this.props.customer.firstname}
-                        lastname = {this.props.customer.lastname[0]}
-                        comments = {this.props.customer.comments}
-                        pictures = {this.props.customer.pictures}
-                        objectList = {this.props.mission.objectList}
+                        firstname = {Customer.firstname}
+                        lastname = {Customer.lastname}
+                        comments = {Customer.comments}
+                        pictures = {Customer.pictures}
+                        objectList = {MissionDetails.objectList}
                     /> 
 
                 </div>        
@@ -299,7 +265,7 @@ function MissionComment(props){
     return(
         <div className='mission_comments'>
             <div className='mission_customer'>
-                <span><strong>Client(e) : {props.firstname} {props.lastname}.</strong> dit : </span>
+                <span><strong>Client(e) : {props.firstname} {props.lastname[0]}.</strong> dit : </span>
             </div>
             <div className='mission_customer_comments'>
                 <p>{props.comments}</p>
@@ -316,11 +282,6 @@ function MissionComment(props){
  
 
 ReactDOM.render(
-  <MissionComponent 
-    mission = {mission} 
-    customer = {customer}
-    origin = {origin}
-    destination = {destination}
-  />,
+  <MissionComponent />,
   document.getElementById('root')
 );
