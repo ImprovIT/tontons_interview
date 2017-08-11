@@ -11,12 +11,19 @@
     "babel-watch": "^2.0.7"
   },
   "scripts": {
-    "start": "babel-watch index.js"
+    "start": "babel-watch index.js",
+    "react": "react-scripts start"
   },
   "babel": {
     "presets": [
       "es2015",
       "react"
     ]
+  },
+  "dependencies": {
+    "moment": "^2.18.1",
+    "react": "^15.6.1",
+    "react-dom": "^15.6.1",
+    "react-scripts": "1.0.10"
   }
 }
