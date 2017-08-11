@@ -1,6 +1,6 @@
 import json from './data-json'
 
-console.log(json);
+//console.log(json);
 
 /*
 * Considering the following JSON : Creating a set of class which make working this the provided JSON Stream easy
@@ -11,7 +11,35 @@ console.log(json);
 *                   - And then npm start (or yarn start)
 */
 
+class Customer {
+    constructor(){
 
+    }
+}
+
+class Destination {
+    constructor(){
+
+    }
+}
+
+class Origin {
+    constructor(){
+
+    }
+}
+
+class Information {
+    constructor(){
+
+    }
+}
+
+class Transaction {
+    constructor(){
+        
+    }
+}
 
 
 /*

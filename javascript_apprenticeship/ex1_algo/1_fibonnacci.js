@@ -32,3 +32,19 @@ console.log(rabbit);
 console.log(credits);
 
 /* Play here */
+function* Fibonacci()
+{
+    let v = 0;
+    let prev = 1;
+    while(true)
+    {
+        let prevV = v;
+        yield v;
+        v += prev;
+        prev = prevV;
+    }
+}
+var fibo = Fibonacci();
+for(let i=0; i<= 100; i++){
+    console.log(fibo.next().value);
+}

@@ -11,7 +11,7 @@
     "babel-watch": "^2.0.7"
   },
   "scripts": {
-    "start": "babel-watch mission.js"
+    "start": "babel-watch index.js"
   },
   "babel": {
     "presets": [
