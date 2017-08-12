@@ -3,6 +3,7 @@ import React from 'react';
 import ReactDOM from 'react-dom';
 import moment from 'moment';
 import momentLocale from 'moment/locale/fr';
+import './index.css';
 
 //console.log(json);
 
@@ -138,12 +139,12 @@ class MissionComponent extends React.Component {
     render() {
         return (
             <div>
-                <div className='mission_info'>
+                <div className='mission'>
 
                     <MissionMap value={Mission.map}/>
                     <MissionTitleInfo
                         title={Mission.name}
-                        date={moment(Mission.date).format('dddd DD MMMM YYYY HH:mm')}
+                        date={Mission.date}
                     />
 
                     <MissionOriginToDest
@@ -190,7 +191,7 @@ class MissionComponent extends React.Component {
 function MissionMap(props){
     return(
         <div className='mission_map'>
-            <img src ={props.value} width="200" height="200"></img> 
+            <img src ={props.value} width="150" height="150"></img> 
         </div>
     );
 }
@@ -198,9 +199,14 @@ function MissionMap(props){
 function MissionTitleInfo(props){
     return(
         <div className='mission_title'>
-            <div><h2>{props.title}</h2></div>
-            <div>{props.date}</div>
-            <div> Votre gain : </div>    
+            <div><strong>{props.title}</strong></div>
+            <div>
+                <i className="material-icons">date_range</i>
+                {moment(props.date).format('dddd DD MMMM YYYY HH:mm')} - 
+                <i className="material-icons">schedule</i>
+                {moment(props.date).format('HH:mm')}
+                </div>
+            <div><i className="material-icons">euro_symbol</i> Votre gain : </div>    
         </div>  
     );
 }
@@ -208,10 +214,16 @@ function MissionTitleInfo(props){
 function MissionOriginToDest(props){
     return(
         <div className ='mission_destination'>
-            <div>
-                {props.originPostalCode} - {props.originLocality}
+                
+            <div> 
+                <i className="material-icons">place</i><br/>             
+                {props.originPostalCode} - {props.originLocality} 
             </div>
-            <div>
+            <div className='forward'>
+                 →
+            </div>
+            <div>               
+                <i className="material-icons">beenhere</i><br/>
                 {props.destPostalCode} - {props.destLocality}
             </div>
         </div>
@@ -222,8 +234,8 @@ function MissionInfoAmount(props){
     return(
         <div className ='mission_info_amount'>
             <ul>
-                <li>Volume :  {props.volume} <sup>m3</sup></li>
-                <li>{props.nbObjects} objet(s)</li>
+                <li><i className="material-icons">fitness_center</i>Volume :  {props.volume} <sup>m3</sup></li>
+                <li><i className="material-icons">weekend</i>{props.nbObjects} objet(s)<i className="material-icons">help_outline</i></li>
             </ul>
         </div>
     );
@@ -233,9 +245,9 @@ function MissionInfoTime(props){
     return(
         <div className='mission_info_time'>
             <ul>
-                <li>Durée<sub>(est.)</sub> : env. {props.duration} min </li>
-                <li>Temps de route<sub>(est.)</sub> : {props.roadDuration} min</li>
-                <li>Distance : {props.distance} km</li>
+                <li><i className="material-icons">timer</i>Durée<sub>(est.)</sub> : env. {props.duration} min </li>
+                <li><i className="material-icons">hourglass_empty</i>Temps de route<sub>(est.)</sub> : env. {props.roadDuration} min</li>
+                <li><i className="material-icons">trending_flat</i>Distance : {props.distance} <sup>km</sup></li>
             </ul>
         </div>
     );
@@ -246,15 +258,16 @@ function MissionInfoAction(props){
     const noElement = <strong> Non </strong>;
     const workforce = props.workforce ? yesElement : noElement;
     const handling = props.handling ? yesElement : noElement;
-    const originLift = props.originLift ? yesElement : noElement;
-    const destLift = props.destLift ? yesElement : noElement;
+
+    const originLift = props.originLift ?  'Oui' : 'Non';
+    const destLift = props.destLift ? 'Oui' : 'Non';
     return(
         <div className ='mission_info_action'>
             <ul>
-                <li>Homme de main : {workforce}</li>
-                <li>Manutention : {handling} : </li>
-                <li><strong>Départ : </strong> {props.originStairs} - {originLift} </li>
-                <li><strong>Arrivée : </strong>{props.destStairs} - {destLift} </li>
+                <li><i className="material-icons">people_outline</i>Homme de main : {workforce}</li>
+                <li><i className="material-icons">settings</i>Manutention : {handling} : </li>
+                <li><i className="material-icons">place</i><strong>Départ : </strong><i className="material-icons">trending_down</i>{props.originStairs} - <i className="material-icons">open_in_browser</i>{originLift} </li>
+                <li><i className="material-icons">beenhere</i><strong>Arrivée : </strong><i className="material-icons">trending_up</i>{props.destStairs} - <i className="material-icons">open_in_browser</i>{destLift} </li>
             </ul>
         </div>
     );
